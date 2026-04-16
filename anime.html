@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Anime Zone • BLACKSAUCE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --card: rgba(20, 15, 15, 0.9);
+      --accent: #a8181f;
+      --accent-glow: rgba(168, 24, 31, 0.45);
+      --text: #f0f0f0;
+      --text-dim: #888;
+      --border: rgba(201, 162, 39, 0.15);
+      --gold: #c9a227;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(circle at 20% 80%, rgba(168, 24, 31, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(201, 162, 39, 0.06) 0%, transparent 50%);
+    }
+
+    header {
+      padding: 40px 20px;
+      text-align: center;
+      background: linear-gradient(to bottom, rgba(20, 15, 15, 0.95), transparent);
+      border-bottom: 1px solid var(--border);
+    }
+
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2.5rem;
+      background: linear-gradient(180deg, #f0f0f0, #c9a227);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 4px;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--text-dim);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .container {
+      max-width: 950px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    .section {
+      background: var(--card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 30px;
+      margin-bottom: 35px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    }
+
+    h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.8rem;
+      color: var(--gold);
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+      letter-spacing: 2px;
+    }
+
+    p {
+      line-height: 1.7;
+      color: var(--text-dim);
+      margin-bottom: 15px;
+      font-size: 1.05rem;
+    }
+
+    .anime-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .anime-card {
+      background: rgba(15, 15, 15, 0.8);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 20px;
+      transition: all 0.3s;
+    }
+
+    .anime-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(168, 24, 31, 0.3);
+      border-color: var(--accent);
+    }
+
+    .anime-card h3 {
+      font-size: 1.1rem;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .anime-card p {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      margin: 0;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 30px;
+      background: linear-gradient(145deg, #a8181f, #6b0a0f);
+      color: white;
+      text-decoration: none;
+      border-radius: 2px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 20px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(168, 24, 31, 0.5);
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      color: #888;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+
+    .back-link:hover {
+      color: #c9a227;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>ANIME ZONE</h1>
+    <p class="subtitle">Discover Anime Classics</p>
+  </header>
+
+  <div class="container">
+    <div class="section">
+      <h2>Getting Started</h2>
+      <p>Welcome to the BLACKSAUCE Anime Zone! Here you can discover amazing anime series and learn about the culture.</p>
+      <p>Anime is animation from Japan that comes in many styles - action, adventure, comedy, drama, and more.</p>
+    </div>
+
+    <div class="section">
+      <h2>Popular Series</h2>
+      <div class="anime-grid">
+        <div class="anime-card">
+          <h3>Dragon Ball</h3>
+          <p>Action-packed adventure with powerful warriors</p>
+        </div>
+        <div class="anime-card">
+          <h3>Pokemon</h3>
+          <p>Train creatures and go on adventures</p>
+        </div>
+        <div class="anime-card">
+          <h3>Naruto</h3>
+          <p>Ninjas with awesome powers</p>
+        </div>
+        <div class="anime-card">
+          <h3>One Piece</h3>
+          <p>Pirates searching for treasure</p>
+        </div>
+        <div class="anime-card">
+          <h3>Attack on Titan</h3>
+          <p>Epic battles against giant beings</p>
+        </div>
+        <div class="anime-card">
+          <h3>My Hero Academia</h3>
+          <p>Heroes in training</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Why Watch Anime?</h2>
+      <p>✓ Great stories with deep meaning</p>
+      <p>✓ Amazing art and animation</p>
+      <p>✓ Different genres for everyone</p>
+      <p>✓ Global community of fans</p>
+    </div>
+
+    <a href="choose.html" class="back-link">← Back to BLACKSAUCE</a>
+  </div>
+
+</body>
+</html>

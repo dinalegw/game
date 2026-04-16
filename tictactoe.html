@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tic-Tac-Toe • BLACKSAUCE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --board: rgba(20, 15, 15, 0.9);
+      --cell: rgba(40, 30, 30, 0.7);
+      --x: #a8181f;
+      --o: #c9a227;
+      --glow-x: rgba(168, 24, 31, 0.5);
+      --glow-o: rgba(201, 162, 39, 0.5);
+      --text: #f0f0f0;
+      --text-dim: #888;
+      --border: rgba(201, 162, 39, 0.15);
+      --win: #c9a227;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-image: 
+        radial-gradient(circle at 20% 80%, rgba(168, 24, 31, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(201, 162, 39, 0.1) 0%, transparent 50%);
+    }
+
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      background: linear-gradient(180deg, #f0f0f0, #c9a227);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 3px;
+    }
+
+    #status {
+      font-size: 1.3rem;
+      margin: 15px 0;
+      min-height: 35px;
+      font-weight: 600;
+      color: var(--text-dim);
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+      background: var(--border);
+      padding: 5px;
+      border-radius: 4px;
+      box-shadow: 0 15px 50px rgba(0,0,0,0.6);
+    }
+
+    .cell {
+      width: 90px;
+      height: 90px;
+      background: var(--board);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-radius: 2px;
+    }
+
+    .cell:hover:not(.taken) {
+      background: var(--cell);
+      transform: scale(0.98);
+    }
+
+    .cell.x {
+      color: var(--x);
+      text-shadow: 0 0 20px var(--glow-x);
+    }
+
+    .cell.o {
+      color: var(--o);
+      text-shadow: 0 0 20px var(--glow-o);
+    }
+
+    .controls {
+      margin-top: 25px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .btn {
+      padding: 12px 30px;
+      border-radius: 2px;
+      border: none;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .btn-restart {
+      background: linear-gradient(145deg, #a8181f, #6b0a0f);
+      color: white;
+      box-shadow: 0 5px 20px rgba(168, 24, 31, 0.4);
+    }
+
+    .btn-restart:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(168, 24, 31, 0.6);
+    }
+
+    .back-link {
+      color: #888;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+
+    .back-link:hover {
+      color: #c9a227;
+    }
+
+    @media (max-width: 400px) {
+      .cell {
+        width: 70px;
+        height: 70px;
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Tic-Tac-Toe</h1>
+  <div id="status">Your Turn - X</div>
+
+  <div class="board">
+    <div class="cell" data-index="0" onclick="makeMove(0)"></div>
+    <div class="cell" data-index="1" onclick="makeMove(1)"></div>
+    <div class="cell" data-index="2" onclick="makeMove(2)"></div>
+    <div class="cell" data-index="3" onclick="makeMove(3)"></div>
+    <div class="cell" data-index="4" onclick="makeMove(4)"></div>
+    <div class="cell" data-index="5" onclick="makeMove(5)"></div>
+    <div class="cell" data-index="6" onclick="makeMove(6)"></div>
+    <div class="cell" data-index="7" onclick="makeMove(7)"></div>
+    <div class="cell" data-index="8" onclick="makeMove(8)"></div>
+  </div>
+
+  <div class="controls">
+    <button class="btn btn-restart" onclick="resetGame()">New Game</button>
+    <a href="choose.html" class="back-link">← Back to BLACKSAUCE</a>
+  </div>
+
+  <script>
+    let gameState = ["", "", "", "", "", "", "", "", ""];
+    let gameActive = true;
+    let playerTurn = true;
+
+    const winningCombos = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8],
+      [0, 3, 6], [1, 4, 7], [2, 5, 8],
+      [0, 4, 8], [2, 4, 6]
+    ];
+
+    function makeMove(index) {
+      if (gameState[index] || !gameActive || !playerTurn) return;
+
+      gameState[index] = 'X';
+      const cell = document.querySelectorAll('.cell')[index];
+      cell.textContent = 'X';
+      cell.classList.add('x', 'taken');
+
+      if (checkWin('X')) {
+        document.getElementById('status').textContent = 'You Win!';
+        document.getElementById('status').style.color = '#c9a227';
+        gameActive = false;
+        return;
+      }
+
+      if (!gameState.includes("")) {
+        document.getElementById('status').textContent = 'Draw!';
+        gameActive = false;
+        return;
+      }
+
+      playerTurn = false;
+      document.getElementById('status').textContent = 'Bot is thinking...';
+      
+      setTimeout(() => {
+        botMove();
+      }, 500);
+    }
+
+    function botMove() {
+      if (!gameActive) return;
+      
+      let move = findBestMove();
+      if (move !== -1) {
+        gameState[move] = 'O';
+        const cell = document.querySelectorAll('.cell')[move];
+        cell.textContent = 'O';
+        cell.classList.add('o', 'taken');
+      }
+
+      if (checkWin('O')) {
+        document.getElementById('status').textContent = 'Bot Wins!';
+        document.getElementById('status').style.color = '#a8181f';
+        gameActive = false;
+        return;
+      }
+
+      if (!gameState.includes("")) {
+        document.getElementById('status').textContent = 'Draw!';
+        gameActive = false;
+        return;
+      }
+
+      playerTurn = true;
+      document.getElementById('status').textContent = 'Your Turn - X';
+    }
+
+    function findBestMove() {
+      let bestScore = -Infinity;
+      let move = -1;
+      
+      for (let i = 0; i < 9; i++) {
+        if (gameState[i] === "") {
+          gameState[i] = 'O';
+          let score = minimax(gameState, 0, false, -Infinity, Infinity);
+          gameState[i] = "";
+          if (score > bestScore) {
+            bestScore = score;
+            move = i;
+          }
+        }
+      }
+      return move;
+    }
+
+    function minimax(board, depth, isMaximizing, alpha, beta) {
+      if (checkWin('O')) return 10 - depth;
+      if (checkWin('X')) return depth - 10;
+      if (!board.includes("")) return 0;
+
+      if (isMaximizing) {
+        let maxScore = -Infinity;
+        for (let i = 0; i < 9; i++) {
+          if (board[i] === "") {
+            board[i] = 'O';
+            let score = minimax(board, depth + 1, false, alpha, beta);
+            board[i] = "";
+            maxScore = Math.max(score, maxScore);
+            alpha = Math.max(alpha, score);
+            if (beta <= alpha) break;
+          }
+        }
+        return maxScore;
+      } else {
+        let minScore = Infinity;
+        for (let i = 0; i < 9; i++) {
+          if (board[i] === "") {
+            board[i] = 'X';
+            let score = minimax(board, depth + 1, true, alpha, beta);
+            board[i] = "";
+            minScore = Math.min(score, minScore);
+            beta = Math.min(beta, score);
+            if (beta <= alpha) break;
+          }
+        }
+        return minScore;
+      }
+    }
+
+    function checkWin(player) {
+      return winningCombos.some(combos => {
+        return combos.every(index => gameState[index] === player);
+      });
+    }
+
+    function resetGame() {
+      gameState = ["", "", "", "", "", "", "", "", ""];
+      gameActive = true;
+      playerTurn = true;
+      document.getElementById('status').textContent = 'Your Turn - X';
+      document.getElementById('status').style.color = '#888';
+      document.querySelectorAll('.cell').forEach(cell => {
+        cell.textContent = '';
+        cell.classList.remove('x', 'o', 'taken');
+      });
+    }
+  </script>
+</body>
+</html>

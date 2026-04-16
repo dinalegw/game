@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator • BLACKSAUCE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --calculator-bg: rgba(20, 15, 15, 0.9);
+      --display-bg: rgba(10, 10, 10, 0.95);
+      --key-bg: rgba(40, 25, 25, 0.7);
+      --key-hover: rgba(60, 35, 35, 0.9);
+      --operator: #c9a227;
+      --operator-hover: #ddb42c;
+      --equal: #a8181f;
+      --equal-hover: #c42128;
+      --text: #f0f0f0;
+      --glow: rgba(201, 162, 39, 0.4);
+      --border: rgba(201, 162, 39, 0.15);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-image: 
+        radial-gradient(circle at 20% 80%, rgba(168, 24, 31, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(201, 162, 39, 0.1) 0%, transparent 50%);
+    }
+
+    #calculator {
+      width: 100%;
+      max-width: 420px;
+      background: var(--calculator-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.7),
+                  0 0 40px rgba(255,140,0,0.2);
+    }
+
+    #display {
+      width: 100%;
+      height: 100px;
+      background: var(--display-bg);
+      color: white;
+      font-size: 3.5rem;
+      text-align: right;
+      padding: 0 25px;
+      border: none;
+      outline: none;
+      font-weight: 300;
+      letter-spacing: 1px;
+      box-shadow: inset 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    #keys {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      padding: 25px;
+    }
+
+    button {
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: none;
+      font-size: 2rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: var(--key-bg);
+      color: var(--text);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    button:hover {
+      transform: scale(1.08);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    }
+
+    button:active {
+      transform: scale(0.92);
+    }
+
+    button.operator-btn {
+      background: var(--operator);
+      color: white;
+    }
+
+    button.operator-btn:hover {
+      background: var(--operator-hover);
+      box-shadow: 0 8px 25px rgba(255,140,0,0.5);
+    }
+
+    button#equal {
+      background: var(--equal);
+      grid-row: span 2;
+      border-radius: 50px;
+    }
+
+    button#equal:hover {
+      background: var(--equal-hover);
+    }
+
+    button#clear {
+      background: #d32f2f;
+    }
+
+    button#clear:hover {
+      background: #e53935;
+    }
+
+    .menu-btn {
+      margin: 30px auto;
+      padding: 14px 40px;
+      font-size: 1rem;
+      background: linear-gradient(145deg, #a8181f, #6b0a0f);
+      color: white;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(168, 24, 31, 0.4);
+      display: block;
+      transition: all 0.3s;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .menu-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 40px rgba(168, 24, 31, 0.6);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    #calculator {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @media (max-width: 500px) {
+      #calculator { max-width: 360px; }
+      #display { font-size: 2.8rem; height: 90px; }
+      button { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="calculator">
+    <input id="display" readonly value="0">
+    <div id="keys">
+      <button onclick="clearDisplay()" id="clear">C</button>
+      <button onclick="appendToDisplay('(')">(</button>
+      <button onclick="appendToDisplay(')')">)</button>
+      <button onclick="appendToDisplay('/')" class="operator-btn">/</button>
+
+      <button onclick="appendToDisplay('7')">7</button>
+      <button onclick="appendToDisplay('8')">8</button>
+      <button onclick="appendToDisplay('9')">9</button>
+      <button onclick="appendToDisplay('*')" class="operator-btn">*</button>
+
+      <button onclick="appendToDisplay('4')">4</button>
+      <button onclick="appendToDisplay('5')">5</button>
+      <button onclick="appendToDisplay('6')">6</button>
+      <button onclick="appendToDisplay('-')" class="operator-btn">-</button>
+
+      <button onclick="appendToDisplay('1')">1</button>
+      <button onclick="appendToDisplay('2')">2</button>
+      <button onclick="appendToDisplay('3')">3</button>
+      <button onclick="appendToDisplay('+')" class="operator-btn">+</button>
+
+      <button onclick="appendToDisplay('0')">0</button>
+      <button onclick="appendToDisplay('.')">.</button>
+      <button onclick="calculate()" id="equal">=</button>
+    </div>
+  </div>
+
+  <button class="menu-btn" onclick="window.location.href='choose.html'">← Back to BLACKSAUCE</button>
+
+  <script>
+    function appendToDisplay(value) {
+      const display = document.getElementById('display');
+      if (display.value === '0' && value !== '.') {
+        display.value = value;
+      } else {
+        display.value += value;
+      }
+    }
+
+    function clearDisplay() {
+      document.getElementById('display').value = '0';
+    }
+
+    function calculate() {
+      try {
+        const result = eval(document.getElementById('display').value);
+        document.getElementById('display').value = result;
+      } catch (error) {
+        document.getElementById('display').value = 'Error';
+      }
+    }
+  </script>
+</body>
+</html>

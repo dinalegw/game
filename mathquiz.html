@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Math Quiz • BLACKSAUCE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+:root {
+      --bg: #0a0a0a;
+      --glass: rgba(168, 24, 31, 0.08);
+      --accent: #c9a227;
+      --text: #f0f0f0;
+      --error: #a8181f;
+    }
+
+    body { 
+      font-family: 'Source Sans 3', 'Inter', system-ui, sans-serif; 
+      text-align: center; 
+      background: var(--bg); 
+      color: var(--text);
+      min-height: 100vh; 
+      display: flex; 
+      flex-direction: column; 
+      align-items:center;
+      justify-content: center;
+      margin: 0;
+      background-image: radial-gradient(circle at 50% 50%, rgba(168, 24, 31, 0.1) 0%, transparent 70%);
+    }
+
+    body { 
+      font-family: 'Inter', system-ui, sans-serif; 
+      text-align: center; 
+      background: var(--bg); 
+      color: var(--text);
+      min-height: 100vh; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      background-image: radial-gradient(circle at 50% 50%, rgba(168, 24, 31, 0.08) 0%, transparent 70%);
+    }
+
+    .quiz-card {
+      background: linear-gradient(145deg, rgba(20, 20, 20, 0.9), rgba(10, 10, 10, 0.95));
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(201, 162, 39, 0.15);
+      padding: 40px;
+      border-radius: 4px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      width: 90%;
+      max-width: 450px;
+    }
+
+    h1 { 
+      font-size: 1.8rem;
+      margin-top: 0;
+      font-family: 'Playfair Display', Georgia, serif;
+      letter-spacing: 2px;
+      background: linear-gradient(180deg, #f0f0f0, #c9a227);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    #score-board {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    #question { 
+      font-size: 3.5rem; 
+      margin: 20px 0; 
+      font-weight: 600;
+      text-shadow: 0 0 20px rgba(201, 162, 39, 0.3);
+    }
+
+    input { 
+      font-size: 1.5rem; 
+      padding: 15px; 
+      width: 150px;
+      background: rgba(20, 20, 20, 0.6);
+      border: 2px solid rgba(201, 162, 39, 0.2);
+      color: white;
+      border-radius: 2px; 
+      text-align: center;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    input:focus { border-color: var(--accent); }
+
+    .btn-check { 
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      padding: 15px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      background: linear-gradient(145deg, #c9a227, #9a7a1c);
+      color: #0a0a0a; 
+      border: none; 
+      border-radius: 2px;
+      cursor: pointer; 
+      transition: transform 0.2s, box-shadow 0.2s;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .btn-check:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(201, 162, 39, 0.4);
+    }
+
+    #result { 
+      font-size: 1.3rem; 
+      margin-top: 25px; 
+      min-height: 30px;
+      font-weight: 600;
+    }
+
+    .menu-btn {
+      background: transparent;
+      color: #888;
+      border: 1px solid rgba(201, 162, 39, 0.3);
+      padding: 10px 20px;
+      border-radius: 2px;
+      cursor: pointer;
+      margin-top: 30px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: all 0.3s;
+      letter-spacing: 1px;
+    }
+
+    .menu-btn:hover { background: rgba(201, 162, 39, 0.1); color: #c9a227; }
+
+    /* Animation for correct answer */
+    .pop { animation: pop 0.4s ease-out; }
+    @keyframes pop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="quiz-card" id="quiz-container">
+    <h1><i class="fas fa-brain"></i> Math Master</h1>
+    <div id="score-board">Streak: <span id="streak">0</span></div>
+    
+    <div id="question"></div>
+    
+    <input type="number" id="answer" placeholder="?" autocomplete="off">
+    <button class="btn-check" onclick="checkAnswer()">CHECK ANSWER</button>
+    
+    <div id="result"></div>
+  </div>
+
+  <a href="choose.html" class="menu-btn">
+    <i class="fas fa-arrow-left"></i> Back to BLACKSAUCE
+  </a>
+
+  <script>
+    let num1, num2, correctAnswer, streak = 0;
+
+    function newQuestion() {
+      const type = Math.random() < 0.5 ? '+' : '-';
+      num1 = Math.floor(Math.random() * 30) + 10; // Harder numbers
+      num2 = Math.floor(Math.random() * 20) + 1;
+
+      if (type === '-' && num2 > num1) {
+        [num1, num2] = [num2, num1];
+      }
+
+      correctAnswer = type === '+' ? num1 + num2 : num1 - num2;
+      document.getElementById('question').textContent = `${num1} ${type} ${num2}`;
+      document.getElementById('answer').value = '';
+      document.getElementById('answer').focus();
+    }
+
+    function checkAnswer() {
+      const input = document.getElementById('answer');
+      const resultDiv = document.getElementById('result');
+      const userAnswer = Number(input.value);
+
+      if (input.value === "") return; // Don't check empty
+
+      if (userAnswer === correctAnswer) {
+        streak++;
+        resultDiv.textContent = 'Correct! ✨';
+        resultDiv.style.color = '#c9a227';
+        document.getElementById('quiz-container').classList.add('pop');
+        setTimeout(() => document.getElementById('quiz-container').classList.remove('pop'), 400);
+      } else {
+        streak = 0;
+        resultDiv.textContent = `Wrong! Answer was ${correctAnswer}`;
+        resultDiv.style.color = '#a8181f';
+      }
+
+      document.getElementById('streak').textContent = streak;
+      
+      // Pause slightly so they see the result, then new question
+      setTimeout(newQuestion, 1200);
+    }
+
+    // Allow pressing "Enter" to submit
+    document.getElementById('answer').addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') checkAnswer();
+    });
+
+    newQuestion();
+  </script>
+</body>
+</html>

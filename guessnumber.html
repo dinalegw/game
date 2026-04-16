@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Number Guess • BLACKSAUCE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --primary: #c9a227;
+      --secondary: #a8181f;
+      --bg: #0a0a0a;
+      --text: #f0f0f0;
+      --glass: rgba(20, 15, 15, 0.85);
+      --border: rgba(201, 162, 39, 0.15);
+    }
+
+    body { 
+      font-family: 'Source Sans 3', 'Segoe UI', sans-serif; 
+      text-align: center; 
+      background: var(--bg); 
+      background-image: 
+        radial-gradient(circle at 30% 70%, rgba(168, 24, 31, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 70% 30%, rgba(201, 162, 39, 0.05) 0%, transparent 50%);
+      color: var(--text);
+      min-height: 100vh; 
+      margin: 0; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center;
+      justify-content: center; 
+    }
+
+    .game-card {
+      background: var(--glass);
+      backdrop-filter: blur(15px);
+      border: 1px solid var(--border);
+      padding: 40px;
+      border-radius: 4px;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7);
+      width: 90%;
+      max-width: 380px;
+    }
+
+    h1 { 
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2rem;
+      margin-top: 0;
+      background: linear-gradient(180deg, #f0f0f0, #c9a227);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 2px;
+    }
+
+    .instructions {
+      color: #888;
+      margin-bottom: 25px;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    #message {
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #888;
+      margin-bottom: 15px;
+    }
+
+    #input-area {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    #guess-input {
+      width: 100px;
+      padding: 14px;
+      font-size: 1.3rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      background: rgba(20, 20, 20, 0.8);
+      color: white;
+      text-align: center;
+      outline: none;
+    }
+
+    #guess-input:focus {
+      border-color: var(--primary);
+    }
+
+    .btn-guess {
+      padding: 14px 25px;
+      background: linear-gradient(145deg, #a8181f, #6b0a0f);
+      color: white;
+      border: none;
+      border-radius: 2px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+
+    .btn-guess:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(168, 24, 31, 0.5);
+    }
+
+    .stats {
+      color: #888;
+      font-size: 0.95rem;
+    }
+
+    .stats span {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .menu-btn {
+      display: block;
+      margin-top: 30px;
+      color: #888;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+
+    .menu-btn:hover {
+      color: #c9a227;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="game-card">
+    <h1>Number Guess</h1>
+    <p class="instructions">I'm thinking of a number between 1 and 100. Can you guess it?</p>
+    
+    <div id="message">Take a guess!</div>
+    
+    <div id="input-area">
+      <input type="number" id="guess-input" placeholder="?" min="1" max="100">
+      <button class="btn-guess" onclick="checkGuess()">Guess</button>
+    </div>
+    
+    <div class="stats">Attempts: <span id="count">0</span></div>
+    
+    <a href="choose.html" class="menu-btn">← Back to BLACKSAUCE</a>
+  </div>
+
+  <script>
+    let secret;
+    let attempts = 0;
+
+    function resetGame() {
+      secret = Math.floor(Math.random() * 100) + 1;
+      attempts = 0;
+      document.getElementById('count').textContent = '0';
+      document.getElementById('message').textContent = 'Take a guess!';
+      document.getElementById('message').style.color = '#888';
+      document.getElementById('guess-input').value = '';
+      document.getElementById('guess-input').disabled = false;
+    }
+
+    function checkGuess() {
+      const input = document.getElementById('guess-input');
+      const guess = parseInt(input.value);
+      
+      if (!guess || guess < 1 || guess > 100) {
+        return;
+      }
+      
+      attempts++;
+      document.getElementById('count').textContent = attempts;
+      
+      const msg = document.getElementById('message');
+      
+      if (guess === secret) {
+        msg.textContent = `You got it in ${attempts} tries!`;
+        msg.style.color = '#c9a227';
+        input.disabled = true;
+        setTimeout(resetGame, 2500);
+      } else if (guess < secret) {
+        msg.textContent = 'Too low! Try higher.';
+        msg.style.color = '#a8181f';
+      } else {
+        msg.textContent = 'Too high! Try lower.';
+        msg.style.color = '#a8181f';
+      }
+      
+      input.value = '';
+      input.focus();
+    }
+
+    document.getElementById('guess-input').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') checkGuess();
+    });
+
+    resetGame();
+  </script>
+</body>
+</html>

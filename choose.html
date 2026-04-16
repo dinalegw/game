@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BLACKSAUCE | The Classic Collection</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --glass: rgba(168, 24, 31, 0.12);
+      --accent: #a8181f;
+      --accent-glow: rgba(168, 24, 31, 0.5);
+      --secondary: #c9a227;
+      --secondary-glow: rgba(201, 162, 39, 0.4);
+      --text: #f0f0f0;
+      --text-dim: #888888;
+      --border: rgba(201, 162, 39, 0.15);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Source Sans 3', 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 50px 20px;
+      background-image: 
+        radial-gradient(circle at 20% 80%, rgba(168, 24, 31, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(201, 162, 39, 0.08) 0%, transparent 50%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 100px,
+        rgba(201, 162, 39, 0.015) 100px,
+        rgba(201, 162, 39, 0.015) 101px
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 3rem;
+      text-align: center;
+      margin-bottom: 10px;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, #f0f0f0 0%, #c9a227 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1::after {
+      content: "Est. 2024";
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 4px;
+      color: #666;
+      margin-top: 8px;
+      font-family: 'Source Sans 3', sans-serif;
+      background: none;
+      -webkit-text-fill-color: #666;
+    }
+
+    p.subtitle {
+      text-align: center;
+      font-size: 1.1rem;
+      color: var(--text-dim);
+      margin-bottom: 50px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+
+    .cards-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      background: linear-gradient(145deg, rgba(20, 20, 20, 0.9), rgba(10, 10, 10, 0.95));
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 30px 24px;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.7),
+                  0 0 30px var(--accent-glow);
+      border-color: var(--accent);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card i {
+      font-size: 3rem;
+      margin-bottom: 18px;
+      background: linear-gradient(135deg, var(--accent), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+      transition: transform 0.4s;
+    }
+
+    .card:hover i {
+      transform: scale(1.1);
+    }
+
+    .card h3 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      color: var(--text);
+      letter-spacing: 2px;
+    }
+
+    .card p {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 28px;
+      background: linear-gradient(145deg, var(--accent), #6b0a0f);
+      color: white;
+      text-decoration: none;
+      border-radius: 2px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(168, 24, 31, 0.3);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 10;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(168, 24, 31, 0.5);
+      background: linear-gradient(145deg, #c42128, var(--accent));
+    }
+
+    .btn-game {
+      background: linear-gradient(145deg, #2d5a27, #1a3a16);
+      box-shadow: 0 4px 20px rgba(45, 90, 39, 0.3);
+    }
+
+    .btn-game:hover {
+      box-shadow: 0 8px 30px rgba(45, 90, 39, 0.5);
+    }
+
+    .btn-anime {
+      background: linear-gradient(145deg, #5a2d27, #3a1a16);
+      box-shadow: 0 4px 20px rgba(90, 45, 39, 0.3);
+    }
+
+    .btn-anime:hover {
+      box-shadow: 0 8px 30px rgba(90, 45, 39, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(201, 162, 39, 0.4);
+      border-radius: 50%;
+      animation: float 30s infinite linear;
+    }
+
+    @keyframes float {
+      0%   { transform: translateY(100vh) scale(0.2); opacity: 0; }
+      10%  { opacity: 0.6; }
+      90%  { opacity: 0.6; }
+      100% { transform: translateY(-20vh) scale(0.8); opacity: 0; }
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 2.2rem; letter-spacing: 4px; }
+      .cards-container { gap: 16px; padding: 0 15px; }
+      .card { padding: 24px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="particles" id="particles"></div>
+
+  <h1>BLACKSAUCE</h1>
+  <p class="subtitle">Choose Your Experience</p>
+
+  <div class="cards-container">
+    <div class="card">
+      <i class="fas fa-brain"></i>
+      <h3>AKINATOR</h3>
+      <p>Let me guess who you're thinking of 🤔</p>
+      <a href="akinator.html" class="btn">Play AKI</a>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-calculator"></i>
+      <h3>CALCULATOR</h3>
+      <p>Quick math, no stress 🧮</p>
+      <a href="calculator.html" class="btn">Open Calc</a>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-car-side"></i>
+      <h3>Motor Zone</h3>
+      <p>Explore rides & speed 🏎️</p>
+      <a href="carchoose.html" class="btn">Check Cars</a>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-gamepad"></i>
+      <h3>Tic-Tac-Toe</h3>
+      <p>Play with bot or friend! ❌⭕</p>
+      <a href="tttchoose.html" class="btn btn-game">Choose Mode</a>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-fire"></i>
+      <h3>ROAST</h3>
+      <p>Get roasted or roast back 😏</p>
+      <a href="roast.html" class="btn">Get Roasted</a>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-hand-rock"></i>
+      <h3>Rock Paper Scissors</h3>
+      <p>Classic showdown 🪨✂️📄</p>
+      <a href="rock.html" class="btn">Play RPS</a>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-comment-dots"></i>
+      <h3>CHAT</h3>
+      <p>Vibe with the bot 🗣️</p>
+      <a href="chatbox.html" class="btn">Start Chat</a>
+    </div>
+
+    <!-- Mini-games -->
+    <div class="card">
+      <i class="fas fa-dice"></i>
+      <h3>Guess the Number</h3>
+      <p>Can you guess my secret number? 🔢</p>
+      <a href="guessnumber.html" class="btn">Play Now</a>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-memory"></i>
+      <h3>Memory Match</h3>
+      <p>Flip cards & match pairs 🧠</p>
+      <a href="memory.html" class="btn">Play Memory</a>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-star"></i>
+      <h3>Catch the Stars</h3>
+      <p>Click falling stars fast! ✨</p>
+      <a href="catchstars.html" class="btn">Catch Stars</a>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-calculator"></i>
+      <h3>Math Quiz</h3>
+      <p>Test your addition & subtraction 🧮</p>
+      <a href="mathquiz.html" class="btn">Start Quiz</a>
+    </div>
+
+    <!-- New Anime Section -->
+    <div class="card">
+      <i class="fas fa-film" style="background: linear-gradient(90deg, #9b5de5, #f15bb5);"></i>
+      <h3>ANIME ZONE</h3>
+      <p>Watch, discover & vibe with anime 🔥</p>
+      <a href="anime.html" class="btn btn-anime" style="background: linear-gradient(135deg, #9b5de5, #f15bb5); box-shadow: 0 8px 25px rgba(155,93,229,0.4);">Enter Anime</a>
+    </div>
+  </div>
+
+  <script>
+    // Floating particles
+    function createParticle() {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = Math.random() * 4 + 1;
+      p.style.width = p.style.height = `${size}px`;
+      p.style.left = `${Math.random() * 100}vw`;
+      p.style.animationDuration = `${Math.random() * 20 + 20}s`;
+      p.style.animationDelay = `${Math.random() * 5}s`;
+      document.querySelector('.particles').appendChild(p);
+      setTimeout(() => p.remove(), 30000);
+    }
+
+    setInterval(createParticle, 400);
+  </script>
+</body>
+</html>

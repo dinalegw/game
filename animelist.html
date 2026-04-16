@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Anime Genres • BLACKSAUCE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --card: rgba(20, 15, 15, 0.9);
+      --accent: #a8181f;
+      --glow: rgba(168, 24, 31, 0.45);
+      --text: #f0f0f0;
+      --text-dim: #888;
+      --border: rgba(201, 162, 39, 0.15);
+      --gold: #c9a227;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(circle at 20% 80%, rgba(168, 24, 31, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(201, 162, 39, 0.06) 0%, transparent 50%);
+    }
+
+    header {
+      padding: 35px 20px;
+      text-align: center;
+      background: linear-gradient(to bottom, rgba(20, 15, 15, 0.95), transparent);
+      border-bottom: 1px solid var(--border);
+    }
+
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2.5rem;
+      background: linear-gradient(180deg, #f0f0f0, #c9a227);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 30px 20px 60px;
+    }
+
+    .genre-card {
+      background: var(--card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 28px;
+      margin-bottom: 25px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    }
+
+    h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.6rem;
+      color: var(--gold);
+      margin-bottom: 15px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+    }
+
+    p {
+      line-height: 1.7;
+      color: var(--text-dim);
+      font-size: 1.05rem;
+    }
+
+    .genre-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .tag {
+      padding: 8px 16px;
+      background: rgba(40, 30, 30, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 30px;
+      background: linear-gradient(145deg, #a8181f, #6b0a0f);
+      color: white;
+      text-decoration: none;
+      border-radius: 2px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(168, 24, 31, 0.5);
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      color: #888;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .back-link:hover { color: #c9a227; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>ANIME GENRES</h1>
+    <p class="subtitle">Learn About Different Types</p>
+  </header>
+
+  <div class="container">
+    <div class="genre-card">
+      <h2>Action</h2>
+      <p>Full of exciting fights, explosions, and non-stop excitement. Characters with super powers battle villains and save the day!</p>
+      <div class="genre-tags">
+        <span class="tag">Fight Scenes</span>
+        <span class="tag">Adventures</span>
+        <span class="tag">Heroes</span>
+      </div>
+    </div>
+
+    <div class="genre-card">
+      <h2>Comedy</h2>
+      <p>Made to make you laugh! Silly situations, funny characters, and humorous jokes that will bright your day.</p>
+      <div class="genre-tags">
+        <span class="tag">Funny</span>
+        <span class="tag">Light</span>
+        <span class="tag">Entertaining</span>
+      </div>
+    </div>
+
+    <div class="genre-card">
+      <h2>Drama</h2>
+      <p>Stories with deep emotions and important messages. Characters face real problems and grow as people.</p>
+      <div class="genre-tags">
+        <span class="tag">Emotional</span>
+        <span class="tag">Character Growth</span>
+        <span class="tag">Stories</span>
+      </div>
+    </div>
+
+    <div class="genre-card">
+      <h2>Sci-Fi</h2>
+      <p>Futuristic stories with robots, space travel, and advanced technology. What could the future hold?</p>
+      <div class="genre-tags">
+        <span class="tag">Future</span>
+        <span class="tag">Technology</span>
+        <span class="tag">Space</span>
+      </div>
+    </div>
+
+    <div class="genre-card">
+      <h2>Fantasy</h2>
+      <p>Magical worlds with wizards, dragons, and mythical creatures. Anything is possible!</p>
+      <div class="genre-tags">
+        <span class="tag">Magic</span>
+        <span class="tag">Adventure</span>
+        <span class="tag">Myths</span>
+      </div>
+    </div>
+
+    <a href="choose.html" class="back-link">← Back to BLACKSAUCE</a>
+  </div>
+
+</body>
+</html>
